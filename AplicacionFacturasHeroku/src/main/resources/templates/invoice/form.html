@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body class="d-flex flex-column min-vh-100 ">
+	<header th:replace="layout/layout ::header"> </header>
+
+	<div
+		class="container d-flex justify-content-center flex-wrap mt-auto pt-4 p-0">
+		<div class="card col-11 col-sm col-lg-8  p-0"
+			style="background: #a7d2ff">
+			<div class="card-header" th:text="${title}"></div>
+			<div class="card-body">
+				<h4 th:class="card-title">
+					<a th:href="@{/detail/}+${invoice.customer.id}"
+						th:utext="#{text.global.volver}"
+						class=" align-middle btn btn-light btn-xs "
+						onclick="localStorage.clear();">&laquo; Return </a>
+				</h4>
+				<div th:object="${invoice}"
+					class=" row col-12 justify-content-center">
+					<ul th:if="${#fields.hasErrors('*')}"
+						class="alert alert-danger col-7">
+						<li th:each="error: ${#fields.errors('*')}" th:text="${error}"></li>
+					</ul>
+				</div>
+				<!-------------------------------------------------------------------------------------------------->
+				<!-------------------------------------------Form--------------------------------------------------->
+				<!-------------------------------------------------------------------------------------------------->
+				<form th:action="@{/invoice/form/}" th:object="${invoice}"
+					id="myForm" method="post" class="col justify-content-center">
+					<div class="form-group row">
+						<label th:text="#{text.factura.form.cliente}" for="customer"
+							class="col-form-label text-center p-0 col-md-2">Customer</label>
+						<div class="col-md">
+							<input id="customer" class="form-control"
+								th:value="${invoice.customer.name}+' '+${invoice.customer.surname}"
+								disabled="disabled" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label th:text="#{text.cliente.factura.descripcion}"
+							for="description" class="col-form-label p-0 text-center col-md-2">Description</label>
+						<div class="col-md">
+							<input type="text" id="description" th:field="*{description}"
+								class="form-control" th:errorclass="'form-control is-invalid'" />
+							<small th:if="${#fields.hasErrors('description')}"
+								th:errors="*{description}" class="invalid-feedback"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="comments" th:text="#{text.factura.form.observacion}"
+							class="col-form-label p-0 col-md-2 text-center">Comments</label>
+						<div class="col-md">
+							<textarea id="comments" th:field="*{comments}"
+								th:errorclass="'form-control alert-danger'" class="form-control"></textarea>
+						</div>
+					</div>
+					<!--Utiliza un método ajax para el autocopletado-->
+					<div class="form-group row">
+						<label th:text="#{text.factura.form.buscar}" for="find_product"
+							class="col-form-label p-0 col-md-2 text-center">Find
+							Product</label>
+						<div class="col-md">
+							<input type="text" name="find_product" id="find_product" value=""
+								placeholder="Apple iPod shuffle,Panasonic Pantalla LCD,Sony Camara digital DSC-W320B"
+								class="form-control mt-2 mt-md-0" />
+						</div>
+					</div>
+
+					<table th:replace="invoice/template-Items:: itemsInvoice"
+						class="table table-responsive"></table>
+					<table id="loadItemProducts"
+						class="table justify-content-center mx-auto table-responsive-sm  table-striped table-hover text-center align-middle">
+						<thead>
+							<tr>
+								<th th:text="#{text.factura.form.item.nombre}">Name</th>
+								<th th:text="#{text.factura.form.item.precio}">Price</th>
+								<th th:text="#{text.factura.form.item.cantidad}">Amount</th>
+								<th th:text="#{text.factura.form.item.total}">Total</th>
+								<th th:text="#{text.factura.form.item.eliminar}">Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<h5 class="text-center col-sm-12 my-4" id="pTotal">
+						<span th:text="#{text.factura.form.total}">Total</span> <span
+							class="badge badge-secondary" id="final_total">0</span>
+					</h5>
+					<div class="form-group row">
+						<div class="text-center col-sm-12">
+							<input type="submit" th:value="${title}" class="btn btn-success" />
+
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

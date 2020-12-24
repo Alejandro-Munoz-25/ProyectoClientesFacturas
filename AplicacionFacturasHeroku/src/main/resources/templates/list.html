@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+	<header th:replace="layout/layout :: header"></header>
+	<div id="i18n_eliminar_cliente" th:text="#{text.cliente.eliminarOk}" style="display: none;"></div>
+
+	<div class="container d-flex justify-content-center flex-wrap mt-auto pt-4 pb-0 text-center ">
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${title}"></div>
+			<div class="card-body pb-0">
+				<h4 class="card-title">
+					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/form}"
+						class="text-decoration-none btn btn-xs mx-auto" style="background: #00c516; color: white"
+						th:text="#{text.cliente.crear}">Create Customer <img alt="create"
+							style="width: 35px; height: auto" th:src="@{/images/plus_512x512.png}">
+					</a>
+				</h4>
+				<p>
+
+					<a target="_blank" th:href="@{'/list'(format=csv)}"
+						class=" align-middle float-md-right btn btn-success btn-xs mb-3">CSV</a>
+					<a target="_blank" th:href="@{'/list'(format=xml)}"
+						class=" align-middle float-md-right btn btn-outline-success btn-xs mb-3 mx-2">XML</a>
+					<a target="_blank" th:href="@{'/list'(format=json)}"
+						class=" align-middle float-md-right btn btn-outline-warning btn-xs mb-3 mx-2">JSON</a>
+				</p>
+				<table class="table table-striped table-responsive text-center table-bordered">
+					<thead>
+						<tr>
+							<th sec:authorize="hasRole('ROLE_USER')" class="align-middle">Id</th>
+							<th th:text="#{text.cliente.nombre}" class="align-middle">Name</th>
+							<th th:text="#{text.cliente.apellido}" class="align-middle">Surname</th>
+							<th th:text="#{text.cliente.email}" class="align-middle">Email</th>
+							<th th:text="#{text.cliente.createAt}" class="align-middle">Date</th>
+							<th class="align-middle" sec:authorize="hasRole('ROLE_ADMIN')"
+								th:text="#{text.cliente.factura.crear}">Create Invoice</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{text.cliente.editar}"
+								class="align-middle">Edit</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{text.cliente.eliminar}"
+								class="align-middle">Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="customer:${customers}" class="align-middle">
+							<td sec:authorize="hasRole('ROLE_USER')" class="align-middle"><a
+									class="btn btn-primary btn-xs" th:href="@{'/detail/'+ ${customer.id}}"
+									th:text="${customer.id}"></a></td>
+							<td th:text="${customer.name}" class="align-middle">Row 1:
+								Col 1</td>
+							<td th:text="${customer.surname}" class="align-middle">Row
+								1: Col 1</td>
+							<td th:text="${customer.email}" class="align-middle">Row 1:
+								Col 1</td>
+							<td th:text="${customer.createAt}" class="align-middle">Row
+								1: Col 1</td>
+							<td class="align-middle p-0" sec:authorize="hasRole('ROLE_ADMIN')"><a
+									th:href="@{/invoice/form/}+${customer.id}"
+									class="align-middle btn btn-success btn-xs"> <img alt="invoice"
+										style="width: 30px; height: auto"
+										th:src="@{/images/document-pencil_512x512.png}">
+								</a></td>
+							<td class="align-middle px-3" sec:authorize="hasRole('ROLE_ADMIN')"><a
+									th:href="@{form/}+${customer.id}" class="align-middle btn btn-primary btn-xs"> <img
+										alt="edit" style="width: 30px; height: auto" th:src="@{/images/user.png}">
+								</a></td>
+							<td class="align-middle px-3" sec:authorize="hasRole('ROLE_ADMIN')"><a
+									th:href="@{/delete/}+${customer.id}"
+									onclick="return confirm(document.getElementById('i18n_eliminar_cliente').innerHTML);"
+									class="align-middle btn btn-danger btn-xs"> <img alt="delete"
+										style="width: 30px; height: auto" th:src="@{/images/minus_512x512.png}">
+								</a></td>
+
+						</tr>
+					</tbody>
+				</table>
+				<nav th:replace="paginatorNav::paginator"></nav>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

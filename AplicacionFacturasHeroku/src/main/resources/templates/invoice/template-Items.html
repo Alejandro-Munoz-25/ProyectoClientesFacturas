@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<table th:fragment="itemsInvoice"
+		class="d-none text-center justify-content-center mx-auto table-responsive">
+		<tbody id="templateItemsInvoice">
+			<tr id="row_{id}"
+				class="text-center justify-content-center mx-auto align-middle">
+				<td class="d-none"><input type="hidden" value="{id}"
+					name="item_Id[]" /></td>
+				<td class="align-middle">{name}</td>
+				<td class="align-middle">{price}</td>
+				<td
+					class=" my-auto align-middle align-content-center justify-content-center"><input
+					type="number" id="amount_{id}" value="1"
+					onchange="itemsHelper.calculateImport({id},{price},this.value);"
+					name="amount[]" class="form-control w-auto mx-auto text-center" /></td>
+				<td class="align-middle"><span id="total_import_{id}">0</span></td>
+				<td class="align-middle"><a href="#"
+					class="btn btn-danger btn-xs"
+					onclick="itemsHelper.deleteInvoiceItem({id});">x</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

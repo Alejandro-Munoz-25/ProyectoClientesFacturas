@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title th:text="'Spring Boot: MVC + JPA + Thymeleaf'+${title}"></title>
+<link rel="stylesheet" th:href="@{/CSS/bootstrap.min.css}">
+</head>
+<body class="d-flex flex-column min-vh-100">
+	<header th:replace="layout/layout :: header"></header>
+	<div id="i18n_eliminar_factura"
+		th:text="#{text.cliente.factura.eliminarOk}" style="display: none;"></div>
+
+	<div
+		class="container d-flex justify-content-center flex-wrap mt-auto p-4 text-center ">
+		<div class="card bg-light p-0 "
+			th:classappend="${#strings.length(customer.photo)>0}?'col-lg-9':'col-lg-7'">
+			<div class="card-header" th:text="${title}"></div>
+			<div class="card-body row justify-content-center pb-0">
+				<h4 th:class="card-title">
+					<a th:href="@{/invoice/form/}+${customer.id}"
+						sec:authorize="hasRole('ROLE_ADMIN')"
+						class="d-block align-middle btn btn-success btn-xs"
+						onclick="localStorage.clear();"
+						th:utext="#{text.cliente.factura.crear}"> Create Invoice </a>
+
+				</h4>
+				<div class="row col-12 justify-content-center p-0 mb-3">
+					<img th:if="${#strings.length(customer.photo)>0}"
+						class="img-thumbnail img-fluid rounded-circle align-self-center mx-3 p-0  mb-3"
+						th:src="@{'/uploads/'+ ${customer.photo}}"
+						th:alt="${customer.photo}" style="width: 200px; height: 200px;" />
+					<ul class="list-group col-11 p-0 text-justify"
+						th:classappend="${#strings.length(customer.photo)>0}?'col-md-6 col-lg-7':'col-md-8'">
+						<li class="list-group-item"
+							th:text="#{text.cliente.nombre}+':	'+${customer.name}"></li>
+						<li class="list-group-item"
+							th:text="#{text.cliente.apellido}+':	'+${customer.surname}"></li>
+						<li class="list-group-item"
+							th:text="#{text.cliente.email}+':	'+${customer.email}"></li>
+						<li class="list-group-item"
+							th:text="#{text.cliente.createAt}+':	'+${customer.createAt}"></li>
+					</ul>
+				</div>
+				<div class="alert alert-info my-4 col-12 col-sm-8"
+					th:if="${#lists.isEmpty(customer.invoices)}"
+					th:text="#{text.cliente.detalle.no.facturas}+'	'+${customer.name}+'	'+${customer.surname}"></div>
+				<table th:if="${!#lists.isEmpty(customer.invoices)}"
+					class="table table-striped table-responsive-sm col-sm-11 text-center table-bordered">
+					<thead class="thead-dark">
+						<tr class="align-middle">
+							<th th:text="#{text.cliente.factura.folio}" class="align-middle">Folio
+								No.</th>
+							<th th:text="#{text.cliente.factura.descripcion}"
+								class="align-middle">Description</th>
+							<th th:text="#{text.cliente.factura.fecha}" class="align-middle">Date</th>
+							<th th:text="#{text.cliente.factura.total}" class="align-middle">Total</th>
+							<th th:text="#{text.cliente.factura.detalle}"
+								class="align-middle" sec:authorize="hasRole('ROLE_ADMIN')">Detail</th>
+							<th th:text="#{text.cliente.factura.eliminar}"
+								class="align-middle" sec:authorize="hasRole('ROLE_ADMIN')">Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="invoice:${customer.invoices}">
+							<td class="align-middle px-3" th:text="${invoice.id}">Row 1:
+								Col 1</td>
+							<td class="align-middle px-3" th:text="${invoice.description}">Row
+								1: Col 1</td>
+							<td class="align-middle px-3" th:text="${invoice.date}">Row
+								1: Col 1</td>
+							<td class="align-middle px-3" th:text="${invoice.total}">Row
+								1: Col 1</td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"
+								class="align-middle px-3"><a
+								th:href="@{'/invoice/detail/'+${invoice.id}}"
+								th:text="#{text.cliente.factura.detalle}"
+								class="btn btn-info btn-xs"></a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"
+								class="align-middle px-3"><a
+								th:href="@{/invoice/delete/}+${invoice.id}"
+								onclick="return confirm(document.getElementById('i18n_eliminar_factura').innerHTML);"
+								class="align-middle btn btn-danger btn-xs"> <img
+									alt="delete" style="width: 30px; height: auto"
+									th:src="@{/images/minus_512x512.png}">
+							</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

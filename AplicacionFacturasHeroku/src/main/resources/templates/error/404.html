@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body class="d-flex flex-column min-vh-100"
+	style="background-color: #FFBB31">
+	<header th:replace="layout/layout ::header"> </header>
+
+	<div
+		class="container d-flex justify-content-center flex-wrap mt-auto pt-4 p-0">
+		<div class="col-12  text-center px-0">
+			<h2 th:text="#{text.error.404.titulo}">404</h2>
+			<h3 th:text="#{text.error.404.subtitulo}">Not Found</h3>
+			<br />
+		</div>
+		<img th:src="@{/images/psyduck.gif}" alt="mail-icon"
+			style="width: 400px; height: 400px"
+			class="rounded mx-auto d-block img-fluid px-1" />
+
+		<div class="col-12 mt-3 text-center">
+			<a th:href="@{/}"
+				class="text-decoration-none btn btn-outline-light btn-xs">Return
+			</a>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

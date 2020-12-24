@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body class="d-flex flex-column min-vh-100 ">
+	<header th:replace="layout/layout ::header"> </header>
+
+	<div
+		class="container d-flex justify-content-center flex-wrap mt-auto pt-4 p-0">
+		<div class="card col-11 col-sm col-lg-8  p-0"
+			style="background: #a7d2ff">
+			<div class="card-header" th:text="${title}"></div>
+			<div class="card-body">
+				<h4 th:class="card-title">
+					<a th:href="@{'/detail/'+${invoice.customer.id}}"
+						th:utext="#{text.global.volver}"
+						class=" align-middle btn btn-light btn-xs  ">&laquo; Return </a> <a
+						target="_blank"
+						th:href="@{'/invoice/detail/'+${invoice.id}(format=pdf)}"
+						class=" align-middle float-right mx-2 btn btn-danger btn-xs ">PDF</a> <a
+						target="_blank"
+						th:href="@{'/invoice/detail/'+${invoice.id}(format=xlsx)}"
+						class=" align-middle float-right btn btn-success btn-xs ">Excel</a>
+				</h4>
+				<ul class="list-group my-2">
+					<li th:text="#{text.factura.ver.datos.cliente}"
+						class="list-group-item list-group-item-info">Item one</li>
+					<li th:text="#{text.cliente.nombre}+' :	'+${invoice.customer}"
+						class="list-group-item"></li>
+					<li th:text="#{text.cliente.email}+' :	'+${invoice.customer.email}"
+						class="list-group-item">Item one</li>
+				</ul>
+				<ul class="list-group  my-2">
+					<li th:text="#{text.factura.ver.datos.factura}"
+						class="list-group-item list-group-item-info">Item one</li>
+					<li th:text="#{text.cliente.factura.folio}+' :'+${invoice.id}"
+						class="list-group-item"></li>
+					<li
+						th:text="#{text.cliente.factura.detalle}+'	:	'+${invoice.description}"
+						class="list-group-item"></li>
+					<li th:text="#{text.cliente.factura.fecha}+'	:	'+${invoice.date}"
+						class="list-group-item"></li>
+				</ul>
+				<div class="alert alert-info my-4"
+					th:if="${#lists.isEmpty(invoice.items)}"
+					th:text="#{text.factura.ver.no.lineas} + ': ' +${invoice.description}"></div>
+				<table th:if="${!#lists.isEmpty(invoice.items)}"
+					class="table table-striped table-responsive-sm col-sm-12 text-center table-bordered table-hover mt-4">
+					<thead>
+						<tr>
+							<td th:text="#{text.factura.form.item.nombre}">Product</td>
+							<td th:text="#{text.factura.form.item.precio}">Price</td>
+							<td th:text="#{text.factura.form.item.cantidad}">Amount</td>
+							<td th:text="#{text.factura.form.item.total}">Total</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="line:${invoice.items}">
+							<td th:text="${line.product.name}"></td>
+							<td th:text="${line.product.price}"></td>
+							<td th:text="${line.amount}"></td>
+							<td th:text="${line.calculateImport()}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<h5 class="float-right">
+					<span th:text="#{text.factura.form.total}">Gran Total</span>: <span
+						th:text="${invoice.total}" class="badge badge-secondary"></span>
+
+				</h5>
+				<div class="card col-11 col-sm col-lg-8  p-0 border-info mb-4"
+					style="max-width: 20rem; background: #a7d2ff">
+					<div class="card-header" th:text="#{text.factura.form.observacion}">Comments</div>
+					<div class="card-body">
+						<p class="card-text" th:text="${invoice.comments}"
+							th:if="${!#strings.isEmpty(invoice.comments)}"></p>
+						<h4 class="card-title"
+							th:if="${#strings.isEmpty(invoice.comments)}"
+							th:text="#{text.factura.ver.no.observaciones}"></h4>
+					</div>
+				</div>
+				<a th:href="@{/detail/}+${invoice.customer.id}"
+					th:utext="#{text.global.volver}"
+					class=" align-middle btn btn-light btn-xs ">&laquo; Return </a>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

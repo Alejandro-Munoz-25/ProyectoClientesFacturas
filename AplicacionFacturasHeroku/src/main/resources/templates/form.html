@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body class="d-flex flex-column min-vh-100 ">
+	<header th:replace="layout/layout ::header"> </header>
+
+	<div
+		class="container d-flex justify-content-center flex-wrap mt-auto pt-4 p-0">
+		<div class="card col-11 col-sm col-lg-8  p-0"
+			style="background: #a7d2ff">
+			<div class="card-header" th:text="${title}"></div>
+			<div class="card-body">
+
+				<div th:object="${customer}"
+					class=" row col-12 justify-content-center">
+					<ul th:if="${#fields.hasErrors('*')}"
+						class="alert alert-danger col-7">
+						<li th:each="error: ${#fields.errors('*')}" th:text="${error}"></li>
+					</ul>
+				</div>
+				<!-------------------------------------------------------------------------------------------------->
+				<!-------------------------------------------Form--------------------------------------------------->
+				<!-------------------------------------------------------------------------------------------------->
+				<form th:action="@{'/form/'}" th:object="${customer}" method="post"
+					enctype="multipart/form-data" class="col">
+					<div class="form-group row">
+						<label th:text="#{text.cliente.nombre}" for="name"
+							class="col-form-label col-md-2">Name</label>
+						<div class="col-md-10 ">
+							<input type="text" id="name" th:field="*{name}"
+								class="form-control" th:errorclass="'form-control alert-danger'" />
+							<small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+								class="form-text text-danger"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label th:text="#{text.cliente.apellido}" for="surname"
+							class="col-form-label col-md-2">Surname</label>
+						<div class="col-md-10 ">
+							<input type="text" id="surname" th:field="*{surname}"
+								th:errorclass="'form-control alert-danger'" class="form-control" />
+							<small th:if="${#fields.hasErrors('surname')}"
+								th:errors="*{surname}" class="form-text text-danger"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label th:text="#{text.cliente.email}" for="email"
+							class="col-form-label col-md-2">Email</label>
+						<div class="col-md-10 ">
+							<input type="text" id="email" th:field="*{email}"
+								th:errorclass="'form-control alert-danger'" class="form-control" />
+							<small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="form-text text-danger"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label th:text="#{text.cliente.createAt}" for="date"
+							class="col-form-label col-md-2">Date</label>
+						<div class="col-md-10 ">
+							<input type="text" id="date" th:field="*{createAt}"
+								th:errorclass="'form-control alert-danger'" class="form-control" />
+							<small th:if="${#fields.hasErrors('createAt')}"
+								th:errors="*{createAt}" class="form-text text-danger"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label th:text="#{text.cliente.foto}" for="file"
+							class="col-form-label col-md-2">Picture</label>
+						<div class="col-md-10 ">
+							<input type="file" id="file" name="file"
+								class="form-control overflow-hidden" disabled="disabled"/>
+								<span th:text="#{text.cliente.mensaje.foto}"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="text-center col-sm-12">
+							<input type="submit" th:value="#{text.cliente.crear}"
+								class="btn btn-success" />
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>
