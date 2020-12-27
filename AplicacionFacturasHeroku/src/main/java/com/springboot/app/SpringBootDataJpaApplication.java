@@ -21,8 +21,8 @@ public class SpringBootDataJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		uploadService.deleteAll();
-		uploadService.init();
+//		uploadService.deleteAll();
+//		uploadService.init();
 		String password = "12345";
 		for (int i = 0; i < 2; i++) {
 			String bCryptPassword = passwordEncoder.encode(password);

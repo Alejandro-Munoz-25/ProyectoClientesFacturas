@@ -1,0 +1,62 @@
+{"properties": [
+  {
+    "name": "spring.cloud.gcp.credentials.location",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cloud.gcp.credentials.location'"
+  },
+  {
+    "name": "FIREBASE_PRIVATE_KEY_ID",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_PRIVATE_KEY_ID'"
+  },
+  {
+    "name": "FIREBASE_BUCKET_NAME",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_BUCKET_NAME'"
+  },
+  {
+    "name": "FIREBASE_PROJECT_ID",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_PROJECT_ID'"
+  },
+  {
+    "name": "FIREBASE_TYPE",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_TYPE'"
+  },
+  {
+    "name": "FIREBASE_PRIVATE_KEY",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_PRIVATE_KEY'"
+  },
+  {
+    "name": "FIREBASE_CLIENT_EMAIL",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_CLIENT_EMAIL'"
+  },
+  {
+    "name": "FIREBASE_CLIENT_ID",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_CLIENT_ID'"
+  },
+  {
+    "name": "FIREBASE_AUTH_URI",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_AUTH_URI'"
+  },
+  {
+    "name": "FIREBASE_AUTH_PROVIDER_X509_CERT_URL",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_AUTH_PROVIDER_X509_CERT_URL'"
+  },
+  {
+    "name": "FIREBASE_TOKEN_URI",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_TOKEN_URI'"
+  },
+  {
+    "name": "FIREBASE_CLIENT_X509_CERT_URL",
+    "type": "java.lang.String",
+    "description": "A description for 'FIREBASE_CLIENT_X509_CERT_URL'"
+  }
+]}
