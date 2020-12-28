@@ -39,7 +39,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/locale", "/404")
 				.permitAll().anyRequest().authenticated()
 				.and().formLogin().successHandler(succeshandler).loginPage("/login").permitAll().and().logout()
-				.permitAll().and().exceptionHandling().accessDeniedPage("/error_403");
+				.permitAll();
 	}
 
 }
