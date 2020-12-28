@@ -1,6 +1,7 @@
 package com.springboot.app.controllers;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
@@ -12,10 +13,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -204,23 +208,6 @@ public class CustomerController {
 		return "redirect:/list";
 	}
 
-	/*-----------------------------------------------------------------------------------*/
-	/*--------------------------Método para verificar imagen-----------------------------*/
-	/*-----------------------------------------------------------------------------------*/
-//	@Secured(value = { "ROLE_USER", "ROLE_ADMIN" })
-//	@GetMapping(value = "/uploads/{filename:.+}")
-//	public ResponseEntity<Resource> getPhoto(@PathVariable String filename) {
-//
-//		Resource resource = null;
-//		try {
-//			resource = uploadFileService.load(filename);
-//		} catch (MalformedURLException e) {
-//			e.printStackTrace();
-//		}
-//		return ResponseEntity.ok()
-//				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"")
-//				.body(resource);
-//	}
 
 	/*-----------------------------------------------------------------------------------*/
 	/*----------------------------Metodos Detalles---------------------------------------*/

@@ -4,6 +4,7 @@ logging:
       hibernate:
         SQL: debug
 spring:
+#Asignar datos de BD
   datasource: 
     username:
     password: 
@@ -30,7 +31,7 @@ spring:
       max-request-size: 10MB
 server:
   port: ${PORT:8080}
-  
+# Asignar credenciales de firebase
 FIREBASE_BUCKET_NAME: 
 FIREBASE_PROJECT_ID: 
 FIREBASE_TYPE: 

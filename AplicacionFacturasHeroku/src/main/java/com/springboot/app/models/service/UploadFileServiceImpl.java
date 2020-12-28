@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.nio.channels.Channels;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,12 +15,19 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.ReadChannel;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
@@ -55,7 +64,7 @@ public class UploadFileServiceImpl implements IUploadFileService {
 	public String copy(MultipartFile file) throws IOException {
 		File fileP = convertMultiPartToFile(file);
 		Path filePath = fileP.toPath();
-		String objectName = UUID.randomUUID().toString().concat("_").concat(file.getOriginalFilename());
+		String objectName = UUID.randomUUID().toString().concat("").concat(file.getOriginalFilename());
 
 		BlobId blobId = BlobId.of(bucketName, "uploads/" + objectName);
 		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
